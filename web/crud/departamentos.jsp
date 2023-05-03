@@ -81,36 +81,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <%
+                                        ArrayList<Departamento> departamentos = (ArrayList<Departamento>) request.getAttribute("departamentos");
+
+                                        for (Departamento departamento : departamentos) {
+                                    %>
                                     <tr>
-                                        <td>A1</td>
-                                        <td>5to Piso, Edificio A</td>
-                                        <td>1,2, 3</td>
-                                        <td>$4300</td>
+                                        <td><%= departamento.getId() %></td>
+                                        <td><%= departamento.getUbicacion() %></td>
+                                        <td><%= departamento.getHabitaciones() %></td>
+                                        <td><%= departamento.getPrecio() %></td>
                                         <td>
                                             <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i></a>
                                             <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>A2</td>
-                                        <td>2do Piso, Edificio B</td>
-                                        <td>4, 5</td>
-                                        <td>$3900</td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>B1</td>
-                                        <td>3er Piso, Edificio C</td>
-                                        <td>6, 7, 8, 9</td>
-                                        <td>$4600</td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
+                                    <% } %>
                                 </tbody>
                             </table>
                         </div>
