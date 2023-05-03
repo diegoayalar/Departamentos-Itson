@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Conexion {
+public class ConexionBD {
 
     private String USERNAME = "root";
     private String PASSWORD = "";
@@ -15,7 +15,7 @@ public class Conexion {
     private String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
     private Connection connection;
 
-    public Conexion() {
+    public ConexionBD() {
         try {
             Class.forName(CLASSNAME);
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
