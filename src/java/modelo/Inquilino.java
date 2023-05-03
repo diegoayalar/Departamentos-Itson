@@ -8,16 +8,16 @@ public class Inquilino {
     private String nombre;
     private String numeroTelefono;
     private LocalDate inicioContrato;
-    private int montoContrato;
+    private int montoPagoContrato;
     private String idDepartamento;
     private boolean estado;
 
-    public Inquilino(int id, String nombre, String numeroTelefono, LocalDate inicioContrato, int montoContrato, String idDepartamento, boolean estado) {
+    public Inquilino(int id, String nombre, String numeroTelefono, LocalDate inicioContrato, int montoPagoContrato, String idDepartamento, boolean estado) {
         this.id = id;
         this.nombre = nombre;
         this.numeroTelefono = numeroTelefono;
         this.inicioContrato = inicioContrato;
-        this.montoContrato = montoContrato;
+        this.montoPagoContrato = montoPagoContrato;
         this.idDepartamento = idDepartamento;
         this.estado = estado;
     }
@@ -54,12 +54,12 @@ public class Inquilino {
         this.inicioContrato = inicioContrato;
     }
 
-    public int getMontoContrato() {
-        return montoContrato;
+    public int getMontoPagoContrato() {
+        return montoPagoContrato;
     }
 
-    public void setMontoContrato(int montoContrato) {
-        this.montoContrato = montoContrato;
+    public void setMontoPagoContrato(int montoPagoContrato) {
+        this.montoPagoContrato = montoPagoContrato;
     }
 
     public String getIdDepartamento() {
@@ -70,7 +70,7 @@ public class Inquilino {
         this.idDepartamento = idDepartamento;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
