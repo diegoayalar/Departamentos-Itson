@@ -4,9 +4,25 @@
         <servlet-name>AgregarDepartamento</servlet-name>
         <servlet-class>servlet.AgregarDepartamento</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ActualizarDepartamento</servlet-name>
+        <servlet-class>servlet.ActualizarDepartamento</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarDepartamento</servlet-name>
+        <servlet-class>servlet.EliminarDepartamento</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AgregarDepartamento</servlet-name>
         <url-pattern>/agregarDepartamento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActualizarDepartamento</servlet-name>
+        <url-pattern>/actualizarDepartamento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarDepartamento</servlet-name>
+        <url-pattern>/eliminarDepartamento</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
