@@ -9,6 +9,10 @@ public class DepartamentosCtrl {
 
     private final DepartamentosDAO departamentosDAO = new DepartamentosDAO();
     
+    public void agregar(Departamento departamento) throws SQLException {
+        departamentosDAO.agregar(departamento);
+    }
+    
     public Departamento consultar(String id) throws SQLException {
         return departamentosDAO.consultar(id);
     }
