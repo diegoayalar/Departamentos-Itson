@@ -56,7 +56,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <h3>Agregar departamento</h3>
-                            <form action="agregarDepartamento" method="post">
+                            <form action="agregarDepartamento" method="POST">
                                 <div class="form-group">
                                     <label for="id">ID</label>
                                     <input type="text" class="form-control" id="id" name="id" placeholder="Ingrese el ID">
@@ -74,36 +74,90 @@
                         </div>
                         <div class="col-md-8">
                             <h3>Lista de departamentos</h3>
-                            <form action="/departamentos">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Ubicación</th>
-                                            <th>Precio</th>
-                                            <th>Acción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <%    
-                                            DepartamentosCtrl departamentosCtrl = new DepartamentosCtrl();
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Ubicación</th>
+                                        <th>Precio</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%    
+                                        DepartamentosCtrl departamentosCtrl = new DepartamentosCtrl();
 
-                                            List<Departamento> departamentos = departamentosCtrl.consultarTodos();
-                                            for (Departamento departamento : departamentos) {
-                                        %>
-                                        <tr>
-                                            <td><%= departamento.getId() %></td>
-                                            <td><%= departamento.getUbicacion() %></td>
-                                            <td>$<%= departamento.getPrecio() %></td>
-                                            <td>
-                                                <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                        <% } %>
-                                    </tbody>
-                                </table>
-                            </form>
+                                        List<Departamento> departamentos = departamentosCtrl.consultarTodos();
+                                        for (Departamento departamento : departamentos) {
+                                    %>
+                                    <tr>
+                                        <td><%= departamento.getId() %></td>
+                                        <td><%= departamento.getUbicacion() %></td>
+                                        <td>$<%= departamento.getPrecio() %></td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editarDepartamentoModal" data-id="<%= departamento.getId() %>" data-ubicacion="<%= departamento.getUbicacion() %>" data-precio="<%= departamento.getPrecio() %>"><i class="fas fa-edit"></i></a>
+                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmarEliminarModal" data-id="<%= departamento.getId() %>"><i class="fas fa-trash"></i>
+                                            </a>                                      
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                            <!-- Modal de Actualizar Departamento -->
+                            <div class="modal fade" id="editarDepartamentoModal" tabindex="-1" role="dialog" aria-labelledby="editarDepartamentoModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editarDepartamentoModalLabel">Editar departamento</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="actualizarDepartamento" method="PUT">
+                                                <div class="form-group">
+                                                    <label for="id">ID</label>
+                                                    <input type="text" class="form-control" id="id" name="id" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="ubicacion">Ubicación</label>
+                                                    <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="Ingrese la ubicación">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="precio">Precio</label>
+                                                    <input type="text" class="form-control" id="precio" name="precio" placeholder="Ingrese el precio">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Actualizar Departamento</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal de Eliminar Departamento -->
+                            <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <form id="eliminarDepartamentoForm" action="eliminarDepartamento" method="DELETE    ">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar eliminación</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Está seguro de eliminar el departamento?
+                                                <input type="hidden" name="id" id="id">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <input type="submit" class="btn btn-danger" value="Eliminar">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </main>
@@ -115,3 +169,29 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </body>
 </html>
+
+<script>
+    $('#editarDepartamentoModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var id = button.data('id'); // Extract info from data-* attributes
+        var ubicacion = button.data('ubicacion');
+        var precio = button.data('precio');
+
+        var modal = $(this);
+        modal.find('.modal-title').text('Editar departamento #' + id);
+        modal.find('#id').val(id);
+        modal.find('#ubicacion').val(ubicacion);
+        modal.find('#precio').val(precio);
+    });
+</script>
+
+<script>
+    $('#confirmarEliminarModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var id = button.data('id'); // Extract info from data-* attributes
+
+        var modal = $(this);
+        modal.find('.modal-title').text('Eliminar departamento #' + id);
+        modal.find('#id').val(id);
+    });
+</script>
