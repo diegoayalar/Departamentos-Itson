@@ -56,18 +56,18 @@
                     <div class="row">
                         <div class="col-md-4">
                             <h3>Agregar departamento</h3>
-                            <form>
+                            <form action="agregarDepartamento" method="post">
                                 <div class="form-group">
                                     <label for="id">ID</label>
-                                    <input type="text" class="form-control" id="id" placeholder="Ingrese el ID">
+                                    <input type="text" class="form-control" id="id" name="id" placeholder="Ingrese el ID">
                                 </div>
                                 <div class="form-group">
                                     <label for="ubicacion">Ubicación</label>
-                                    <input type="text" class="form-control" id="ubicacion" placeholder="Ingrese la ubicación">
+                                    <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="Ingrese la ubicación">
                                 </div>
                                 <div class="form-group">
                                     <label for="precio">Precio</label>
-                                    <input type="text" class="form-control" id="precio" placeholder="Ingrese el precio">
+                                    <input type="text" class="form-control" id="precio" name="precio" placeholder="Ingrese el precio">
                                 </div>
                                 <button type="submit" class="btn btn-primary">Agregar Departamento</button>
                             </form>
