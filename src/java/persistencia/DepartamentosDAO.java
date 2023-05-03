@@ -9,23 +9,33 @@ import modelo.Departamento;
 
 public class DepartamentosDAO extends ConexionBD {
 
+    public void agregar(Departamento departamento) throws SQLException {
+    String sql = "INSERT INTO departamento (id_departamento, ubicacion, precio) VALUES (?, ?, ?)";
+    try (PreparedStatement pst = getConexion().prepareStatement(sql)) {
+        pst.setString(1, departamento.getId());
+        pst.setString(2, departamento.getUbicacion());
+        pst.setInt(3, departamento.getPrecio());
+        pst.executeUpdate();
+    }
+}
+    
     public Departamento consultar(String id) throws SQLException {
-    Departamento departamento = null;
-    String sql = "CALL selectDepartamento(?)";
-    try (PreparedStatement pst = getConexion().prepareCall(sql)) {
-        pst.setString(1, id);
-        try (ResultSet rs = pst.executeQuery()) {
-            if (rs.next()) {
-                departamento = new Departamento(
-                    rs.getString("id_departamento"),
-                    rs.getString("ubicacion"),
-                    rs.getInt("precio")
-                );
+        Departamento departamento = null;
+        String sql = "CALL selectDepartamento(?)";
+        try ( PreparedStatement pst = getConexion().prepareCall(sql)) {
+            pst.setString(1, id);
+            try ( ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    departamento = new Departamento(
+                            rs.getString("id_departamento"),
+                            rs.getString("ubicacion"),
+                            rs.getInt("precio")
+                    );
+                }
             }
         }
+        return departamento;
     }
-    return departamento;
-}
 
     public List<Departamento> consultarTodos() throws SQLException {
         List<Departamento> departamentos = new ArrayList<>();
