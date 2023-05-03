@@ -10,15 +10,15 @@ import modelo.Departamento;
 public class DepartamentosDAO extends ConexionBD {
 
     public void agregar(Departamento departamento) throws SQLException {
-    String sql = "INSERT INTO departamento (id_departamento, ubicacion, precio) VALUES (?, ?, ?)";
-    try (PreparedStatement pst = getConexion().prepareStatement(sql)) {
-        pst.setString(1, departamento.getId());
-        pst.setString(2, departamento.getUbicacion());
-        pst.setInt(3, departamento.getPrecio());
-        pst.executeUpdate();
+        String sql = "INSERT INTO departamentos (id_departamento, ubicacion, precio) VALUES (?, ?, ?)";
+        try ( PreparedStatement pst = getConexion().prepareStatement(sql)) {
+            pst.setString(1, departamento.getId());
+            pst.setString(2, departamento.getUbicacion());
+            pst.setInt(3, departamento.getPrecio());
+            pst.executeUpdate();
+        }
     }
-}
-    
+
     public Departamento consultar(String id) throws SQLException {
         Departamento departamento = null;
         String sql = "CALL selectDepartamento(?)";
