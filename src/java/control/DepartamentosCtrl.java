@@ -13,6 +13,14 @@ public class DepartamentosCtrl {
         departamentosDAO.agregar(departamento);
     }
     
+    public void actualizar(Departamento departamento) throws SQLException {
+        departamentosDAO.actualizar(departamento);
+    }
+    
+    public void eliminar(String id) throws SQLException {
+        departamentosDAO.eliminar(id);
+    }
+    
     public Departamento consultar(String id) throws SQLException {
         return departamentosDAO.consultar(id);
     }
