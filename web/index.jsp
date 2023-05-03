@@ -38,7 +38,7 @@
                                 <li class="nav-item">
                                     <a
                                         class="nav-link"
-                                        href="crud/departamentos.jsp"
+                                        href="departamentos.jsp"
                                         >
                                         <i class="fas fa-sign-in-alt mr-2"></i>
                                         Iniciar sesión

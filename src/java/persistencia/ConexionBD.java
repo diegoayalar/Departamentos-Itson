@@ -10,7 +10,7 @@ public class ConexionBD {
     private String PASSWORD = "";
     private String HOST = "localhost";
     private String PORT = "3306";
-    private String DATABASE = "sistema";
+    private String DATABASE = "departamentos_itson";
     private String CLASSNAME = "com.mysql.cj.jdbc.Driver";
     private String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
     private Connection connection;
