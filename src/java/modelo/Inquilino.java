@@ -3,16 +3,16 @@ package modelo;
 import java.time.LocalDate;
 
 public class Inquilino {
-    
+
     private int id;
     private String nombre;
     private String numeroTelefono;
     private LocalDate inicioContrato;
     private int montoContrato;
     private String idDepartamento;
-    private int estado;
+    private boolean estado;
 
-    public Inquilino(int id, String nombre, String numeroTelefono, LocalDate inicioContrato, int montoContrato, String idDepartamento, int estado) {
+    public Inquilino(int id, String nombre, String numeroTelefono, LocalDate inicioContrato, int montoContrato, String idDepartamento, boolean estado) {
         this.id = id;
         this.nombre = nombre;
         this.numeroTelefono = numeroTelefono;
@@ -70,11 +70,11 @@ public class Inquilino {
         this.idDepartamento = idDepartamento;
     }
 
-    public int getEstado() {
+    public boolean isEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 
@@ -99,6 +99,5 @@ public class Inquilino {
         final Inquilino other = (Inquilino) obj;
         return this.id == other.id;
     }
-    
-    
+
 }
