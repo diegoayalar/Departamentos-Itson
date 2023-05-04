@@ -12,6 +12,18 @@
         <servlet-name>EliminarDepartamento</servlet-name>
         <servlet-class>servlet.EliminarDepartamento</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AgregarInquilino</servlet-name>
+        <servlet-class>servlet.AgregarInquilino</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActualizarInquilino</servlet-name>
+        <servlet-class>servlet.ActualizarInquilino</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DarBajaInquilino</servlet-name>
+        <servlet-class>servlet.DarBajaInquilino</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AgregarDepartamento</servlet-name>
         <url-pattern>/agregarDepartamento</url-pattern>
@@ -23,6 +35,18 @@
     <servlet-mapping>
         <servlet-name>EliminarDepartamento</servlet-name>
         <url-pattern>/eliminarDepartamento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarInquilino</servlet-name>
+        <url-pattern>/agregarInquilino</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActualizarInquilino</servlet-name>
+        <url-pattern>/actualizarInquilino</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DarBajaInquilino</servlet-name>
+        <url-pattern>/darBajaInquilino</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
