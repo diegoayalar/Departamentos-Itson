@@ -12,6 +12,15 @@ public class Inquilino {
     private String idDepartamento;
     private boolean estado;
 
+        public Inquilino(String nombre, String numeroTelefono, LocalDate inicioContrato, int montoPagoContrato, String idDepartamento, boolean estado) {
+        this.nombre = nombre;
+        this.numeroTelefono = numeroTelefono;
+        this.inicioContrato = inicioContrato;
+        this.montoPagoContrato = montoPagoContrato;
+        this.idDepartamento = idDepartamento;
+        this.estado = estado;
+    }
+    
     public Inquilino(int id, String nombre, String numeroTelefono, LocalDate inicioContrato, int montoPagoContrato, String idDepartamento, boolean estado) {
         this.id = id;
         this.nombre = nombre;
