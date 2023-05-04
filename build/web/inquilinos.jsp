@@ -1,3 +1,9 @@
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="modelo.Inquilino"%>
+<%@page import="modelo.Departamento"%>
+<%@page import="control.InquilinosCtrl"%>
+<%@page import="control.DepartamentosCtrl"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -52,38 +58,36 @@
                     <div class="row">
                         <div class="col-md-4">
                             <h3>Agregar Arrendatario</h3>
-                            <form>
+                            <form action="agregarInquilino" method="POST">
                                 <div class="form-group">
                                     <label for="nombre">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre">
+                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre">
                                 </div>
                                 <div class="form-group">
                                     <label for="numeroTelefono">Número de teléfono</label>
-                                    <input type="text" class="form-control" id="numeroTelefono" placeholder="Ingrese el número">
+                                    <input type="text" class="form-control" id="numeroTelefono" name="numeroTelefono" placeholder="Ingrese el número">
                                 </div>
                                 <div class="form-group">
-                                    <label for="inicioContrato">Fecha de inicio de contrato</label>
-                                    <input type="date" class="form-control" id="inicioContrato">
+                                    <label for="fechaInicioContrato">Fecha de inicio de contrato</label>
+                                    <input type="date" class="form-control" id="fechaInicioContrato" name="fechaInicioContrato">
                                 </div>
                                 <div class="form-group">
-                                    <label for="montoPago">Monto a pagar</label>
-                                    <input type="text" class="form-control" id="montoPago" placeholder="Ingrese el monto">
+                                    <label for="montoPagoContrato">Monto a pagar</label>
+                                    <input type="text" class="form-control" id="montoPagoContrato" name="montoPagoContrato" placeholder="Ingrese el monto">
                                 </div>
                                 <div class="form-group">
+                                    <%    
+                                        DepartamentosCtrl departamentosCtrl = new DepartamentosCtrl();
+                                        List<Departamento> departamentos = departamentosCtrl.consultarTodos();
+                                    %>
                                     <label for="departamento">Departamento</label>
-                                    <select class="form-control" id="Arrendatario">
+                                    <select class="form-control" id="idDepartamento" name="idDepartamento">
                                         <option disabled selected value="">-- Seleccionar departamento --</option>
-                                        <option value="1">A1</option>
-                                        <option value="2">A2</option>
-                                        <option value="3">A3</option>                                        <option value="1">A1</option>
-                                        <option value="4">A4</option>
-                                        <option value="5">A5</option>
-                                        <option value="6">A6</option>
-                                        <option value="7">B1</option>
-                                        <option value="8">B2</option>
-                                        <option value="9">B3</option>
-                                        <option value="10">B4</option>
-                                        <option value="11">B5</option>
+                                        <%
+                                            for (Departamento departamento : departamentos) {
+                                        %>
+                                        <option value="<%= departamento.getId() %>"><%= departamento.getId() %></option>
+                                        <% } %>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Agregar Arrendatario</button>
@@ -105,47 +109,112 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <%    
+                                       InquilinosCtrl inquilinosCtrl = new InquilinosCtrl();
+
+                                       List<Inquilino> inquilinos = inquilinosCtrl.consultarTodos();
+                                        for (Inquilino inquilino : inquilinos) {
+                                    %>
                                     <tr>
-                                        <td>1</td>
-                                        <td>Juan López</td>
-                                        <td>6441061933</td>
-                                        <td>12/02/23</td>
-                                        <td>$1450</td>
-                                        <td>A1</td>
-                                        <td>1</td>
+                                        <td><%= inquilino.getId() %></td>
+                                        <td><%= inquilino.getNombre() %></td>
+                                        <td><%= inquilino.getNumeroTelefono() %></td>
+                                        <td><%= inquilino.getInicioContrato() %></td>
+                                        <td>$<%= inquilino.getMontoPagoContrato() %></td>
+                                        <td><%= inquilino.getIdDepartamento() %></td>
+                                        <td><%= inquilino.getEstado() == true ? "Activo" : "Inactivo" %></td>
                                         <td>
-                                            <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editarInquilinoModal" data-id="<%= inquilino.getId() %>" data-nombre="<%= inquilino.getNombre() %>" data-numero_telefono="<%= inquilino.getNumeroTelefono() %>" data-fecha_inicio_contrato="<%= inquilino.getInicioContrato() %>" data-monto_pago_contrato="<%= inquilino.getMontoPagoContrato() %>" data-id_departamento="<%= inquilino.getIdDepartamento() %>"data-estado="<%= inquilino.getEstado() %>"><i class="fas fa-edit"></i></a>
+                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmarDarBajaModal" data-id="<%= inquilino.getId() %>"><i class="fas fa-trash"></i>
+                                            </a>       
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Maria Acevedo</td>
-                                        <td>6442963305</td>
-                                        <td>17/02/23</td>
-                                        <td>$1450</td>
-                                        <td>A1</td>
-                                        <td>1</td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>John Wick</td>
-                                        <td>6444811040</td>
-                                        <td>01/03/23</td>
-                                        <td>$1450</td>
-                                        <td>A1</td>
-                                        <td>0</td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                        </td>
-                                    </tr>
+                                    <% } %>
                                 </tbody>
                             </table>
+                            <!-- Modal de Actualizar inquilino -->
+                            <div class="modal fade" id="editarInquilinoModal" tabindex="-1" role="dialog" aria-labelledby="editarInquilinoModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editarInquilinoModalLabel">Editar Inquilino</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="actualizarInquilino" method="PUT">
+                                                <div class="form-group">
+                                                    <label for="id">ID</label>
+                                                    <input type="text" class="form-control" id="id" name="id" readonly>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="nombre">Nombre</label>
+                                                    <input type="text" class="form-control" id="nombre" name="nombre">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="numeroTelefono">Número de teléfono</label>
+                                                    <input type="text" class="form-control" id="numeroTelefono" name="numeroTelefono">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="fechaInicioContrato">Fecha de inicio de contrato</label>
+                                                    <input type="date" class="form-control" id="fechaInicioContrato" name="fechaInicioContrato">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="montoPagoContrato">Monto a pagar</label>
+                                                    <input type="text" class="form-control" id="montoPagoContrato" name="montoPagoContrato">
+                                                </div>
+                                                <div class="form-group">
+                                                    <%    
+                                                       departamentos = departamentosCtrl.consultarTodos();
+                                                    %>
+                                                    <label for="idDepartamento">Departamento</label>
+                                                    <select class="form-control" id="idDepartamento" name="idDepartamento">
+                                                        <option disabled selected value="">-- Seleccionar departamento --</option>
+                                                        <% for (Departamento departamento : departamentos) { %>
+                                                        <option value="<%= departamento.getId() %>"><%= departamento.getId() %></option>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="estado">Estado</label>
+                                                     <select class="form-control" id="estado" name="estado">
+                                                        <option disabled selected value="">-- Seleccionar estado --</option>
+                                                        <option value="false">Inactivo</option>
+                                                        <option value="true">Activo</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Actualizar Inquilino</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal de Eliminar Departamento -->
+                            <div class="modal fade" id="confirmarDarBajaModal" tabindex="-1" role="dialog" aria-labelledby="confirmarDarBajaModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <form id="darBajaInquilinoForm" action="darBajaInquilino" method="PUT">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="confirmarDarBajaModalLabel">Confirmar dar de baja</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Está seguro de dar de baja al inquilino?
+                                                <input type="hidden" name="id" id="id">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <input type="submit" class="btn btn-danger" value="Dar de baja">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
             </div>
@@ -155,3 +224,37 @@
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </body>
 </html>
+
+<script>
+    $('#editarInquilinoModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var id = button.data('id'); // Extract info from data-* attributes
+        var nombre = button.data('nombre');
+        var numeroTelefono = button.data('numero_telefono');
+        var fechaInicioContrato = button.data('fecha_inicio_contrato');
+        var montoPagoContrato = button.data('monto_pago_contrato');
+        var idDepartamento = button.data('id_departamento');
+        var estado = button.data('estado');
+
+        var modal = $(this);
+        modal.find('.modal-title').text('Editar inquilino #' + id);
+        modal.find('#id').val(id);
+        modal.find('#nombre').val(nombre);
+        modal.find('#numeroTelefono').val(numeroTelefono);
+        modal.find('#fechaInicioContrato').val(fechaInicioContrato);
+        modal.find('#montoPagoContrato').val(montoPagoContrato);
+        modal.find('#idDepartamento').val(idDepartamento);
+        modal.find('#estado').val(estado);
+    });
+</script>
+
+<script>
+    $('#confirmarDarBajaModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var id = button.data('id'); // Extract info from data-* attributes
+
+        var modal = $(this);
+        modal.find('.modal-title').text('Dar de baja inquilino #' + id);
+        modal.find('#id').val(id);
+    });
+</script>
