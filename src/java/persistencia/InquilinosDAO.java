@@ -29,10 +29,11 @@ public class InquilinosDAO extends ConexionBD {
     }
 
     public void actualizar(Inquilino inquilino) throws SQLException {
-        String sql = "UPDATE inquilinos SET"
-                + "nombre = ?, numero_telefono = ?, inicio_contrato = ?"
-                + "monto_pago_contrato = ?, id_departamento = ?, estado = ?"
+        String sql = "UPDATE inquilinos SET "
+                + "nombre = ?, numero_telefono = ?, inicio_contrato = ?,"
+                + "monto_pago_contrato = ?, id_departamento = ?, estado = ? "
                 + "WHERE id_inquilino = ?";
+        
         try ( PreparedStatement pst = getConexion().prepareStatement(sql)) {
             pst.setString(1, inquilino.getNombre());
             pst.setString(2, inquilino.getNumeroTelefono());
@@ -51,6 +52,28 @@ public class InquilinosDAO extends ConexionBD {
             pst.setString(1, id);
             pst.executeUpdate();
         }
+    }
+    
+        public Inquilino consultar(String id) throws SQLException {
+        Inquilino inquilino = null;
+        String sql = "CALL selectInquilino(?)";
+        try ( PreparedStatement pst = getConexion().prepareCall(sql)) {
+            pst.setString(1, id);
+            try ( ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    inquilino = new Inquilino(
+                            rs.getInt("id_inquilino"),
+                            rs.getString("nombre"),
+                            rs.getString("nombre"),
+                            LocalDate.parse(rs.getString("inicio_contrato")),
+                            rs.getInt("monto_pago_contrato"),
+                            rs.getString("id_departamento"),
+                            rs.getBoolean("estado")
+                    );
+                }
+            }
+        }
+        return inquilino;
     }
 
     public List<Inquilino> consultarTodos() throws SQLException {
