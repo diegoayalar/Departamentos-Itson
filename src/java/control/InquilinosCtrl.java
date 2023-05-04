@@ -7,7 +7,7 @@ import persistencia.InquilinosDAO;
 
 public class InquilinosCtrl {
 
-    private final InquilinosDAO inquilinosDAO = new InquilinosDAO();
+    private InquilinosDAO inquilinosDAO = new InquilinosDAO();
     
     public void agregar(Inquilino inquilino) throws SQLException {
         inquilinosDAO.agregar(inquilino);
@@ -19,6 +19,10 @@ public class InquilinosCtrl {
     
     public void eliminar(String id) throws SQLException {
         inquilinosDAO.eliminar(id);
+    }
+    
+    public Inquilino consultar(String id) throws SQLException {
+        return inquilinosDAO.consultar(id);
     }
     
     public List<Inquilino> consultarTodos() throws SQLException {

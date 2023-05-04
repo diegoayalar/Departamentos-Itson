@@ -7,7 +7,7 @@ import persistencia.DepartamentosDAO;
 
 public class DepartamentosCtrl {
 
-    private final DepartamentosDAO departamentosDAO = new DepartamentosDAO();
+    private DepartamentosDAO departamentosDAO = new DepartamentosDAO();
     
     public void agregar(Departamento departamento) throws SQLException {
         departamentosDAO.agregar(departamento);
