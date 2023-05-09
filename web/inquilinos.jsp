@@ -125,8 +125,7 @@
                                         <td><%= inquilino.getEstado() == true ? "Activo" : "Inactivo" %></td>
                                         <td>
                                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editarInquilinoModal" data-id="<%= inquilino.getId() %>" data-nombre="<%= inquilino.getNombre() %>" data-numero_telefono="<%= inquilino.getNumeroTelefono() %>" data-fecha_inicio_contrato="<%= inquilino.getInicioContrato() %>" data-monto_pago_contrato="<%= inquilino.getMontoPagoContrato() %>" data-id_departamento="<%= inquilino.getIdDepartamento() %>"data-estado="<%= inquilino.getEstado() %>"><i class="fas fa-edit"></i></a>
-                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmarDarBajaModal" data-id="<%= inquilino.getId() %>"><i class="fas fa-trash"></i>
-                                            </a>       
+                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmarDarBajaModal" data-id="<%= inquilino.getId() %>"><i class="fas fa-trash"></i></a>       
                                         </td>
                                     </tr>
                                     <% } %>
@@ -178,12 +177,13 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="estado">Estado</label>
-                                                     <select class="form-control" id="estado" name="estado">
+                                                    <select class="form-control" id="estado" name="estado">
                                                         <option disabled selected value="">-- Seleccionar estado --</option>
                                                         <option value="false">Inactivo</option>
                                                         <option value="true">Activo</option>
                                                     </select>
                                                 </div>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                                 <button type="submit" class="btn btn-primary">Actualizar Inquilino</button>
                                             </form>
                                         </div>
@@ -191,7 +191,7 @@
                                 </div>
                             </div>
 
-                            <!-- Modal de Eliminar Departamento -->
+                            <!-- Modal de Dar de baja inquilino -->
                             <div class="modal fade" id="confirmarDarBajaModal" tabindex="-1" role="dialog" aria-labelledby="confirmarDarBajaModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
