@@ -127,6 +127,7 @@
                                                     <label for="precio">Precio</label>
                                                     <input type="text" class="form-control" id="precio" name="precio" placeholder="Ingrese el precio">
                                                 </div>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                                 <button type="submit" class="btn btn-primary">Actualizar Departamento</button>
                                             </form>
                                         </div>
