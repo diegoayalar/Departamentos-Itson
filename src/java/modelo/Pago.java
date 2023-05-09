@@ -9,13 +9,23 @@ public class Pago {
     private int mes;
     private LocalDate fecha;
     private int monto;
+    private boolean estado;
 
-    public Pago(int id, int idInquilino, int mes, LocalDate fecha, int monto) {
+    public Pago(int idInquilino, int mes, LocalDate fecha, int monto, boolean estado) {
+        this.idInquilino = idInquilino;
+        this.mes = mes;
+        this.fecha = fecha;
+        this.monto = monto;
+        this.estado = estado;
+    }
+
+    public Pago(int id, int idInquilino, int mes, LocalDate fecha, int monto, boolean estado) {
         this.id = id;
         this.idInquilino = idInquilino;
         this.mes = mes;
         this.fecha = fecha;
         this.monto = monto;
+        this.estado = estado;
     }
 
     public int getId() {
@@ -56,6 +66,14 @@ public class Pago {
 
     public void setMonto(int monto) {
         this.monto = monto;
+    }
+
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     @Override
