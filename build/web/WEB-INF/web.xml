@@ -24,6 +24,18 @@
         <servlet-name>DarBajaInquilino</servlet-name>
         <servlet-class>servlet.DarBajaInquilino</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AgregarPago</servlet-name>
+        <servlet-class>servlet.AgregarPago</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActualizarPago</servlet-name>
+        <servlet-class>servlet.ActualizarPago</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PonerPendientePago</servlet-name>
+        <servlet-class>servlet.PonerPendientePago</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AgregarDepartamento</servlet-name>
         <url-pattern>/agregarDepartamento</url-pattern>
@@ -47,6 +59,18 @@
     <servlet-mapping>
         <servlet-name>DarBajaInquilino</servlet-name>
         <url-pattern>/darBajaInquilino</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarPago</servlet-name>
+        <url-pattern>/agregarPago</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActualizarPago</servlet-name>
+        <url-pattern>/actualizarPago</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PonerPendientePago</servlet-name>
+        <url-pattern>/ponerPendientePago</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
