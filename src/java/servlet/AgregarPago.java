@@ -21,7 +21,7 @@ public class AgregarPago extends HttpServlet {
         String fecha = request.getParameter("fecha");
         int monto = Integer.parseInt(request.getParameter("monto"));
 
-        Pago pago = new Pago(idInquilino, mes, LocalDate.parse(fecha), monto, true);
+        Pago pago = new Pago(idInquilino, mes, LocalDate.parse(fecha), monto, "Pagado");
         PagosCtrl pagosCtrl = new PagosCtrl();
         pagosCtrl.agregar(pago);
 
