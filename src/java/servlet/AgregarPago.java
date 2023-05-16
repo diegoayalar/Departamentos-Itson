@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import control.PagosCtrl;
+import java.time.temporal.ChronoUnit;
 import modelo.Pago;
 
 public class AgregarPago extends HttpServlet {
@@ -18,10 +19,19 @@ public class AgregarPago extends HttpServlet {
 
         int idInquilino = Integer.parseInt(request.getParameter("idInquilino"));
         int mes = Integer.parseInt(request.getParameter("mes"));
-        String fecha = request.getParameter("fecha");
+        LocalDate fecha = LocalDate.parse(request.getParameter("fecha"));
         int monto = Integer.parseInt(request.getParameter("monto"));
 
-        Pago pago = new Pago(idInquilino, mes, LocalDate.parse(fecha), monto, "Pagado");
+        String estado;
+         LocalDate fechaActual = LocalDate.now();
+        long diasDiferencia = ChronoUnit.DAYS.between(fechaActual, fecha);
+        
+        if(diasDiferencia >= 1){
+            estado = "Pendiente";
+        } else{
+            estado = "Pagado";
+        }
+        Pago pago = new Pago(idInquilino, mes, fecha, monto, estado);
         PagosCtrl pagosCtrl = new PagosCtrl();
         pagosCtrl.agregar(pago);
 
