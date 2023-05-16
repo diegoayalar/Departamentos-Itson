@@ -36,6 +36,14 @@
         <servlet-name>PonerPendientePago</servlet-name>
         <servlet-class>servlet.PonerPendientePago</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>IniciarSesion</servlet-name>
+        <servlet-class>servlet.IniciarSesion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegistrarUsuario</servlet-name>
+        <servlet-class>servlet.RegistrarUsuario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AgregarDepartamento</servlet-name>
         <url-pattern>/agregarDepartamento</url-pattern>
@@ -71,6 +79,14 @@
     <servlet-mapping>
         <servlet-name>PonerPendientePago</servlet-name>
         <url-pattern>/ponerPendientePago</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IniciarSesion</servlet-name>
+        <url-pattern>/iniciarSesion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistrarUsuario</servlet-name>
+        <url-pattern>/registrarUsuario</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

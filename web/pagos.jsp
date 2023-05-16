@@ -1,5 +1,9 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.Comparator"%>
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.time.temporal.ChronoUnit"%>
 <%@page import="modelo.Inquilino"%>
 <%@page import="modelo.Pago"%>
 <%@page import="control.InquilinosCtrl"%>
@@ -28,7 +32,7 @@
             <div class="row">
                 <!-- Left Navigation Bar -->
                 <nav
-                    class="navbar navbar-expand-md navbar-dark bg-dark position-fixed w-100"
+                    class="navbar navbar-expand-md navbar-dark bg-dark w-100"
                     >
                     <div class="container-fluid">
                         <button
@@ -65,32 +69,82 @@
                                     </a>
                                 </li>
                             </ul>
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index.jsp">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>
+                                        Cerrar sesión
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </nav>
                 <!-- Content -->
                 <main
-                    role="main"
                     class="col-md-9 ml-sm-auto col-lg-12 pt-3 px-4"
-                    style="margin-top: 60px"
                     >
                     <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom"
                         >
                         <h1 class="h2">Pagos</h1>
                     </div>
+                    <!-- Contenedor de alertas -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <%
+                            InquilinosCtrl inquilinosCtrl = new InquilinosCtrl();
+                            List<Inquilino> inquilinos = inquilinosCtrl.consultarTodos();    
+        
+                            PagosCtrl pagosCtrl = new PagosCtrl();
+                            List<Pago> pagos = pagosCtrl.consultarTodos();
+                            Collections.sort(pagos, Comparator.comparing(Pago::getFecha)); // Ordenar por fecha
+
+                            for (Pago pago : pagos) {
+
+                                LocalDate fechaActual = LocalDate.now();
+
+                                long diasDiferencia = ChronoUnit.DAYS.between(fechaActual, pago.getFecha());
+
+                                String estiloFondo = "";
+
+                                if (diasDiferencia >= 0 && diasDiferencia <= 7) {
+                                    estiloFondo = "background-color: #dc7d6b";  // Rojo
+                                } else if (diasDiferencia > 7 && diasDiferencia <= 14) {
+                                    estiloFondo = "background-color: #f8ca9c";  // Naranja
+                                } else if (diasDiferencia > 14 && diasDiferencia <= 30) {
+                                    estiloFondo = "background-color: #fee49a";  // Amarillo
+                                }
+            
+                                if (!estiloFondo.isEmpty()) {
+                                String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+                            %>
+                            <!-- Alerta de pago -->
+                            <div class="alert alert-dismissible" role="alert" style="<%= estiloFondo %>">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                ID: <%= pago.getId() %><br>
+                                Arrendatario: <%= inquilinosCtrl.consultar(String.valueOf(pago.getIdInquilino())).getNombre() %><br>
+                                Mes: <%= meses[pago.getMes()] %><br>
+                                Monto: $<%= pago.getMonto() %><br>
+                                Estado: <%= pago.getEstado() %>
+                            </div>
+                            <% 
+                          }
+                        }
+                            %>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-4">
                             <h3>Agregar pago</h3>
                             <form action="agregarPago" method="POST">
                                 <div class="form-group">
-                                    <%    
-                                        InquilinosCtrl inquilinosCtrl = new InquilinosCtrl();
-                                        List<Inquilino> inquilinos = inquilinosCtrl.consultarTodos();
-                                    %>
-                                    <label for="idInquilino">Inquilino</label>
+                                    <label for="idInquilino">Arrendatario</label>
                                     <select class="form-control" id="idInquilino" name="idInquilino">
-                                        <option disabled selected value="">-- Seleccionar Inquilino --</option>
+                                        <option disabled selected value="">-- Seleccionar arrendatario --</option>
                                         <%
                                             for (Inquilino inquilino : inquilinos) {
                                         %>
@@ -137,7 +191,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Inquilino</th>
+                                        <th>Arrendatario</th>
                                         <th>Mes</th>
                                         <th>Fecha</th>
                                         <th>Monto</th>
@@ -147,13 +201,28 @@
                                 </thead>
                                 <tbody>
                                     <%    
-                                        PagosCtrl pagosCtrl = new PagosCtrl();
+                                        pagosCtrl = new PagosCtrl();
+                                        pagos = pagosCtrl.consultarTodos();
+                                        Collections.sort(pagos, Comparator.comparing(Pago::getFecha).reversed()); // Ordenar por fecha
 
-                                        List<Pago> pagos = pagosCtrl.consultarTodos();
                                         for (Pago pago : pagos) {
+                                        
+                                        LocalDate fechaActual = LocalDate.now();
+                                       
+                                        long diasDiferencia = ChronoUnit.DAYS.between(fechaActual, pago.getFecha());
+                         
+                                        String estiloFondo = "";
+                                        
+                                        if (diasDiferencia >= 0 && diasDiferencia <= 7) {
+                                            estiloFondo = "background-color: #dc7d6b";  // Rojo
+                                        } else if (diasDiferencia > 7 && diasDiferencia <= 14) {
+                                            estiloFondo = "background-color: #f8ca9c";  // Naranja
+                                        } else if (diasDiferencia > 14 && diasDiferencia <= 30) {
+                                            estiloFondo = "background-color: #fee49a";  // Amarillo
+                                        }
                                     %>
-                                    <tr>
-                                        <td><%= pago.getId() %></td>
+                                    <tr id="pago-<%= pago.getEstado() %>">
+                                        <td style="<%= estiloFondo %>"><%= pago.getId() %></td>
                                         <td><%= inquilinosCtrl.consultar(String.valueOf(pago.getIdInquilino())).getNombre() %></td>
                                         <td>
                                             <% 
@@ -199,15 +268,16 @@
                                         </td>
                                         <td><%= pago.getFecha() %></td>
                                         <td>$<%= pago.getMonto() %></td>
-                                        <td><%= pago.getEstado() == true ? "Pagado" : "Cancelado" %></td>
+                                        <td><%= pago.getEstado() %></td>
                                         <td>
                                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editarPagoModal" data-id="<%= pago.getId() %>" data-id-inquilino="<%= pago.getIdInquilino() %>" data-mes="<%= pago.getMes() %>" data-fecha="<%= pago.getFecha() %>" data-monto="<%= pago.getMonto() %>" data-estado="<%= pago.getEstado() %>"><i class="fas fa-edit"></i></a>
-                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmarPendienteModal" data-id="<%= pago.getId() %>"><i class="fas fa-trash"></i></a>  
+                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmarPendienteModal" data-id="<%= pago.getId() %>"><i class="fas fa-times"></i></a>  
                                         </td>
                                     </tr>
                                     <% } %>
                                 </tbody>
                             </table>
+
                             <!-- Modal de Actualizar inquilino -->
                             <div class="modal fade" id="editarPagoModal" tabindex="-1" role="dialog" aria-labelledby="editarPagoModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -219,7 +289,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="actualizarPago" method="PUT">
+                                            <form action="actualizarPago" method="POST">
                                                 <div class="form-group">
                                                     <label for="id">ID</label>
                                                     <input type="text" class="form-control" id="id" name="id" readonly>
@@ -228,9 +298,9 @@
                                                     <%    
                                                        inquilinos = inquilinosCtrl.consultarTodos();
                                                     %>
-                                                    <label for="idInquilino">Inquilino</label>
+                                                    <label for="idInquilino">Arrendatario</label>
                                                     <select class="form-control" id="idInquilino" name="idInquilino">
-                                                        <option disabled selected value="">-- Seleccionar inquilino --</option>
+                                                        <option disabled selected value="">-- Seleccionar arrendatario --</option>
                                                         <% for (Inquilino inquilino: inquilinos) { %>
                                                         <option value="<%= inquilino.getId() %>"><%= inquilino.getNombre() %></option>
                                                         <% } %>
@@ -268,11 +338,12 @@
                                                     <label for="estado">Estado</label>
                                                     <select class="form-control" id="estado" name="estado">
                                                         <option disabled selected value="">-- Seleccionar estado --</option>
-                                                        <option value="false">Pendiente</option>
-                                                        <option value="true">Pagado</option>
+                                                        <option value="Pendiente">Pendiente</option>
+                                                        <option value="Pagado">Pagado</option>
+                                                        <option value="Cancelado">Cancelado</option>
                                                     </select>
                                                 </div>
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                                 <button type="submit" class="btn btn-primary">Actualizar Pago</button>
                                             </form>
                                         </div>
@@ -284,7 +355,7 @@
                             <div class="modal fade" id="confirmarPendienteModal" tabindex="-1" role="dialog" aria-labelledby="confirmarPendienteModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <form id="confirmarPendienteForm" action="ponerPendientePago" method="PUT">
+                                        <form id="confirmarPendienteForm" action="ponerPendientePago" method="POST">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="confirmarPendienteModalLabel">Confirmar poner como pendiente</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -318,8 +389,8 @@
 
 <script>
     $('#editarPagoModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var id = button.data('id'); // Extract info from data-* attributes
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
         var idInquilino = button.data('id-inquilino');
         var mes = button.data('mes');
         var fecha = button.data('fecha');
@@ -339,8 +410,8 @@
 
 <script>
     $('#confirmarPendienteModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var id = button.data('id'); // Extract info from data-* attributes
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
 
         var modal = $(this);
         modal.find('.modal-title').text('Poner pendiente pago #' + id);

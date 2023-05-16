@@ -18,7 +18,6 @@
     <body>
         <div class="container-fluid">
             <div class="row">
-                <!-- Navigation Bar -->
                 <nav class="navbar navbar-expand-md navbar-dark bg-dark position-fixed w-100">
                     <div class="container-fluid">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
@@ -45,10 +44,18 @@
                                     </a>
                                 </li>
                             </ul>
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index.jsp">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>
+                                        Cerrar sesión
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </nav>
-                <!-- Content -->
+
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-12 pt-3 px-4" style="margin-top: 60px">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                         <h1 class="h2">Departamentos</h1>
@@ -56,21 +63,29 @@
                     <div class="row">
                         <div class="col-md-4">
                             <h3>Agregar departamento</h3>
-                            <form action="agregarDepartamento" method="POST">
+                            <form action="agregarDepartamento" method="POST" id="formulario">
                                 <div class="form-group">
                                     <label for="id">ID</label>
                                     <input type="text" class="form-control" id="id" name="id" placeholder="Ingrese el ID">
+                                    <div class="error" id="error-id"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="ubicacion">Ubicación</label>
                                     <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="Ingrese la ubicación">
+                                    <div class="error" id="error-ubicacion"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="precio">Precio</label>
                                     <input type="text" class="form-control" id="precio" name="precio" placeholder="Ingrese el precio">
+                                    <div class="error" id="error-precio"></div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Agregar Departamento</button>
+                                <button type="submit" class="btn btn-primary" id="enviar">Agregar Departamento</button>
+                                <div id="mensaje-error"></div> <!-- Aquí se mostrará el mensaje de error -->
+                                <% if (request.getAttribute("mensaje") != null) { %>
+                                <div class="alert alert-danger"><%= request.getAttribute("mensaje") %></div>
+                                <% } %>
                             </form>
+
                         </div>
                         <div class="col-md-8">
                             <h3>Lista de departamentos</h3>
@@ -114,7 +129,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="actualizarDepartamento" method="PUT">
+                                            <form action="actualizarDepartamento" method="POST">
                                                 <div class="form-group">
                                                     <label for="id">ID</label>
                                                     <input type="text" class="form-control" id="id" name="id" readonly>
@@ -139,7 +154,7 @@
                             <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <form id="eliminarDepartamentoForm" action="eliminarDepartamento" method="DELETE    ">
+                                        <form id="eliminarDepartamentoForm" action="eliminarDepartamento" method="POST">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="confirmarEliminarModalLabel">Confirmar eliminación</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -173,8 +188,8 @@
 
 <script>
     $('#editarDepartamentoModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var id = button.data('id'); // Extract info from data-* attributes
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
         var ubicacion = button.data('ubicacion');
         var precio = button.data('precio');
 
@@ -188,11 +203,35 @@
 
 <script>
     $('#confirmarEliminarModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var id = button.data('id'); // Extract info from data-* attributes
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
 
         var modal = $(this);
         modal.find('.modal-title').text('Eliminar departamento #' + id);
         modal.find('#id').val(id);
+    });
+</script>
+
+<script>
+    const formulario = document.getElementById("formulario");
+    const enviar = document.getElementById("enviar");
+    const mensajeError = document.getElementById("mensaje-error");
+
+    enviar.addEventListener("click", function (event) {
+        event.preventDefault();
+        const precio = formulario.precio.value.trim();
+        const id = formulario.id.value.trim();
+        const ubicacion = formulario.ubicacion.value.trim();
+        if (id === "" || ubicacion === "" || precio === "") {
+            mensajeError.innerHTML = "Ingrese los datos faltantes";
+        } else if (isNaN(precio)) {
+            mensajeError.innerHTML = "El precio debe ser un número";
+        } else if (id.length > 10) {
+            mensajeError.innerHTML = "El ID debe tener máximo 10 caracteres";
+        } else if (ubicacion.length > 100) {
+            mensajeError.innerHTML = "La ubicación debe tener máximo 100 caracteres";
+        } else {
+            formulario.submit();
+        }
     });
 </script>

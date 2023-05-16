@@ -21,7 +21,7 @@ public class ActualizarPago extends HttpServlet {
         int mes = Integer.parseInt(request.getParameter("mes"));
         String fecha = request.getParameter("fecha");
         int monto = Integer.parseInt(request.getParameter("monto"));
-        boolean estado = Boolean.parseBoolean(request.getParameter("estado"));
+        String estado = request.getParameter("estado");
 
         Pago pago = new Pago(id, idInquilino, mes, LocalDate.parse(fecha), monto, estado);
         PagosCtrl pagosCtrl = new PagosCtrl();

@@ -20,7 +20,7 @@ public class PagosDAO extends ConexionBD {
             pst.setInt(2, pago.getMes());
             pst.setDate(3, Date.valueOf(pago.getFecha()));
             pst.setInt(4, pago.getMonto());
-            pst.setBoolean(5, pago.getEstado());
+            pst.setString(5, pago.getEstado());
             pst.executeUpdate();
         }
     }
@@ -36,7 +36,7 @@ public class PagosDAO extends ConexionBD {
             pst.setInt(2, pago.getMes());
             pst.setDate(3, Date.valueOf(pago.getFecha()));
             pst.setInt(4, pago.getMonto());
-            pst.setBoolean(5, pago.getEstado());
+            pst.setString(5, pago.getEstado());
             pst.setInt(6, pago.getId());
             pst.executeUpdate();
         }
@@ -63,7 +63,7 @@ public class PagosDAO extends ConexionBD {
                             rs.getInt("mes"),
                             LocalDate.parse(rs.getString("fecha")),
                             rs.getInt("monto"),
-                            rs.getBoolean("estado")
+                            rs.getString("estado")
                     );
                 }
             }
@@ -82,7 +82,7 @@ public class PagosDAO extends ConexionBD {
                         rs.getInt("mes"),
                         LocalDate.parse(rs.getString("fecha")),
                         rs.getInt("monto"),
-                        rs.getBoolean("estado")
+                        rs.getString("estado")
                 );
                 pagos.add(pago);
             }

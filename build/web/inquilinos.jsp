@@ -47,6 +47,14 @@
                                     </a>
                                 </li>
                             </ul>
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index.jsp">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>
+                                        Cerrar sesión
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </nav>
@@ -125,7 +133,7 @@
                                         <td><%= inquilino.getEstado() == true ? "Activo" : "Inactivo" %></td>
                                         <td>
                                             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#editarInquilinoModal" data-id="<%= inquilino.getId() %>" data-nombre="<%= inquilino.getNombre() %>" data-numero_telefono="<%= inquilino.getNumeroTelefono() %>" data-fecha_inicio_contrato="<%= inquilino.getInicioContrato() %>" data-monto_pago_contrato="<%= inquilino.getMontoPagoContrato() %>" data-id_departamento="<%= inquilino.getIdDepartamento() %>"data-estado="<%= inquilino.getEstado() %>"><i class="fas fa-edit"></i></a>
-                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmarDarBajaModal" data-id="<%= inquilino.getId() %>"><i class="fas fa-trash"></i></a>       
+                                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmarDarBajaModal" data-id="<%= inquilino.getId() %>"><i class="fas fa-ban"></i></a>    
                                         </td>
                                     </tr>
                                     <% } %>
@@ -142,7 +150,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="actualizarInquilino" method="PUT">
+                                            <form action="actualizarInquilino" method="POST">
                                                 <div class="form-group">
                                                     <label for="id">ID</label>
                                                     <input type="text" class="form-control" id="id" name="id" readonly>
@@ -195,7 +203,7 @@
                             <div class="modal fade" id="confirmarDarBajaModal" tabindex="-1" role="dialog" aria-labelledby="confirmarDarBajaModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <form id="darBajaInquilinoForm" action="darBajaInquilino" method="PUT">
+                                        <form id="darBajaInquilinoForm" action="darBajaInquilino" method="POST">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="confirmarDarBajaModalLabel">Confirmar dar de baja</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -216,19 +224,20 @@
                             </div>
 
                         </div>
-                    </div>
+                </main>
             </div>
-            <!-- Bootstrap JS -->
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        </div>
+        <!-- Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </body>
 </html>
 
 <script>
     $('#editarInquilinoModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var id = button.data('id'); // Extract info from data-* attributes
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
         var nombre = button.data('nombre');
         var numeroTelefono = button.data('numero_telefono');
         var fechaInicioContrato = button.data('fecha_inicio_contrato');
@@ -250,8 +259,8 @@
 
 <script>
     $('#confirmarDarBajaModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var id = button.data('id'); // Extract info from data-* attributes
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
 
         var modal = $(this);
         modal.find('.modal-title').text('Dar de baja inquilino #' + id);
