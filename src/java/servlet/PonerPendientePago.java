@@ -20,7 +20,7 @@ public class PonerPendientePago extends HttpServlet {
         PagosCtrl pagosCtrl = new PagosCtrl();
         
         Pago pago = pagosCtrl.consultar(id);
-        pago.setEstado(false);
+        pago.setEstado("Cancelado");
         pagosCtrl.actualizar(pago);
 
         response.sendRedirect("pagos.jsp");
