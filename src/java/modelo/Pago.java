@@ -9,9 +9,9 @@ public class Pago {
     private int mes;
     private LocalDate fecha;
     private int monto;
-    private boolean estado;
+    private String estado;
 
-    public Pago(int idInquilino, int mes, LocalDate fecha, int monto, boolean estado) {
+    public Pago(int idInquilino, int mes, LocalDate fecha, int monto, String estado) {
         this.idInquilino = idInquilino;
         this.mes = mes;
         this.fecha = fecha;
@@ -19,7 +19,7 @@ public class Pago {
         this.estado = estado;
     }
 
-    public Pago(int id, int idInquilino, int mes, LocalDate fecha, int monto, boolean estado) {
+    public Pago(int id, int idInquilino, int mes, LocalDate fecha, int monto, String estado) {
         this.id = id;
         this.idInquilino = idInquilino;
         this.mes = mes;
@@ -68,11 +68,11 @@ public class Pago {
         this.monto = monto;
     }
 
-    public boolean getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
